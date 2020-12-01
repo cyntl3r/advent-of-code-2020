@@ -234,6 +234,4 @@ const findResult = (numbers) => {
 };
 
 const result = findResult(input);
-
-console.log('result of two numbers sum:', result.resultOfTwoNumbersSum);
-console.log('result of three numbers sum:', result.resultOfThreeNumbersSum);
+console.log(result.resultOfTwoNumbersSum, result.resultOfThreeNumbersSum);
