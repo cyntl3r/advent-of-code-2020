@@ -206,32 +206,34 @@ const input = `1472
   .split('\n')
   .map(Number);
 
-const findSumGiving2020 = (numbers) => {
-  for (let num1 of numbers) {
-    for (let num2 of numbers) {
-      if (num1 + num2 === 2020) {
-        return num1 * num2;
-      }
-    }
-  }
-  return false;
-};
+const isNumbersSum2020 = (...nums) =>
+  nums.reduce((prev, current) => prev + current, 0) === 2020;
 
-const findSumOfThreeNumbersGiving2020 = (numbers) => {
+const findResult = (numbers) => {
+  let resultOfTwoNumbersSum = 0;
+  let resultOfThreeNumbersSum = 0;
+
   for (let num1 of numbers) {
+    if (resultOfTwoNumbersSum > 0 && resultOfThreeNumbersSum > 0) break;
     for (let num2 of numbers) {
+      if (isNumbersSum2020(num1, num2)) {
+        resultOfTwoNumbersSum = num1 * num2;
+      }
       for (let num3 of numbers) {
-        if (num1 + num2 + num3 === 2020) {
-          return num1 * num2 * num3;
+        if (isNumbersSum2020(num1, num2, num3)) {
+          resultOfThreeNumbersSum = num1 * num2 * num3;
         }
       }
     }
   }
-  return false;
+
+  return {
+    resultOfTwoNumbersSum,
+    resultOfThreeNumbersSum,
+  };
 };
 
-console.log('findSumGiving2020', findSumGiving2020(input));
-console.log(
-  'findSumOfThreeNumbersGiving2020',
-  findSumOfThreeNumbersGiving2020(input)
-);
+const result = findResult(input);
+
+console.log('result of two numbers sum:', result.resultOfTwoNumbersSum);
+console.log('result of three numbers sum:', result.resultOfThreeNumbersSum);
