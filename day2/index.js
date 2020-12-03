@@ -48,15 +48,10 @@ const isPasswordContainsValidIndexes = (policyAndPassword) => {
 };
 
 const findResult = (input) => ({
-  countOfPasswordsContainPolicy: input.filter(isPasswordContainsPolicy).length,
-  countOfPasswordsContainValidPolicyIndexes: input.filter(
-    isPasswordContainsValidIndexes
-  ).length,
+  part1: input.filter(isPasswordContainsPolicy).length,
+  part2: input.filter(isPasswordContainsValidIndexes).length,
 });
 
 const input = readInput().toString();
 const result = findResult(input);
-console.log(
-  result.countOfPasswordsContainPolicy,
-  result.countOfPasswordsContainValidPolicyIndexes
-);
+console.log(result.part1, result.part2);

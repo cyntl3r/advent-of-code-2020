@@ -25,11 +25,11 @@ const findResult = (input) => {
     }
   }
   return {
-    resultOfTwoNumbersSum,
-    resultOfThreeNumbersSum,
+    part1: resultOfTwoNumbersSum,
+    part2: resultOfThreeNumbersSum,
   };
 };
 
 const input = readInput().toNumber();
 const result = findResult(input);
-console.log(result.resultOfTwoNumbersSum, result.resultOfThreeNumbersSum);
+console.log(result.part1, result.part2);
