@@ -1,7 +1,7 @@
 /**
  * Advent of Code 2020
  * @author cyntl3r
- * @description https://adventofcode.com/2020/day/2
+ * @description https://adventofcode.com/2020/day/3
  */
 import { readInput } from '../utils.js';
 
