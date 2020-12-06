@@ -5,32 +5,34 @@
  */
 import { readInput } from '../utils.js';
 
-const calculate = (range, rowInstruction) => {
+const calculateRange = (range, rowInstruction) => {
   for (let letter of rowInstruction) {
+    console.log(range);
     if (['F', 'L'].includes(letter)) {
       range[1] -= Math.ceil((range[1] - range[0]) / 2);
     } else if (['B', 'R'].includes(letter)) {
       range[0] += Math.ceil((range[1] - range[0]) / 2);
     }
   }
-  if (range[0] === range[1]) return range[0];
-  return false;
+  return range[0];
 };
 
-const calculateRow = (rowInstruction) => calculate([0, 127], rowInstruction);
+const calculateRow = (rowInstruction) =>
+  calculateRange([0, 127], rowInstruction);
 
 const calculateColumn = (columnInstruction) =>
-  calculate([0, 7], columnInstruction);
+  calculateRange([0, 7], columnInstruction);
+
+const getSeatId = (instruction) => {
+  const row = calculateRow(instruction.substring(0, 7));
+  const column = calculateColumn(instruction.substring(7, 11));
+  return row * 8 + column;
+};
 
 const getHighestSeatId = (input) => {
   let highestSeatId = 0;
   for (let instruction of input) {
-    const row = calculateRow(instruction.substring(0, 7));
-    const column = calculateColumn(instruction.substring(7, 11));
-    const seatId = row * 8 + column;
-    if (row === 0 && column === 0) {
-      console.log('seatId', seatId);
-    }
+    const seatId = getSeatId(instruction);
     if (seatId > highestSeatId) {
       highestSeatId = seatId;
     }
@@ -38,9 +40,24 @@ const getHighestSeatId = (input) => {
   return highestSeatId;
 };
 
+const findMissingSeat = (input) => {
+  let seats = [];
+  let missingSeat = null;
+  input.forEach((instruction) => seats.push(getSeatId(instruction)));
+  seats.sort((a, b) => a - b);
+  seats.map((seat, index) => {
+    if (index > 0 && index < seats.length) {
+      if (seat - seats[index - 1] !== 1) {
+        missingSeat = seat - 1;
+      }
+    }
+  });
+  return missingSeat;
+};
+
 const findResult = (input) => ({
   part1: getHighestSeatId(input),
-  part2: null,
+  part2: findMissingSeat(input),
 });
 
 const input = readInput().toString();
