@@ -14,7 +14,7 @@ const isTreeInPattern = (pattern, index) =>
 const getCountOfTrees = (input, right, down) => {
   let counter = 0,
     currentXIndex = right;
-  for (const i = down; i < input.length; i += down) {
+  for (let i = down; i < input.length; i += down) {
     if (isTreeInPattern(input[i], currentXIndex)) {
       counter += 1;
     }
