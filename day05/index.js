@@ -6,7 +6,7 @@
 import { readInput } from '../utils.js';
 
 const calculateRange = (range, rowInstruction) => {
-  for (let letter of rowInstruction) {
+  for (const letter of rowInstruction) {
     console.log(range);
     if (['F', 'L'].includes(letter)) {
       range[1] -= Math.ceil((range[1] - range[0]) / 2);
@@ -31,7 +31,7 @@ const getSeatId = (instruction) => {
 
 const getHighestSeatId = (input) => {
   let highestSeatId = 0;
-  for (let instruction of input) {
+  for (const instruction of input) {
     const seatId = getSeatId(instruction);
     if (seatId > highestSeatId) {
       highestSeatId = seatId;

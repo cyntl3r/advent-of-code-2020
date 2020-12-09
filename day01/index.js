@@ -11,13 +11,13 @@ const isNumbersSum2020 = (...nums) =>
 const findResult = (input) => {
   let resultOfTwoNumbersSum = 0;
   let resultOfThreeNumbersSum = 0;
-  for (let num1 of input) {
+  for (const num1 of input) {
     if (resultOfTwoNumbersSum > 0 && resultOfThreeNumbersSum > 0) break;
-    for (let num2 of input) {
+    for (const num2 of input) {
       if (isNumbersSum2020(num1, num2)) {
         resultOfTwoNumbersSum = num1 * num2;
       }
-      for (let num3 of input) {
+      for (const num3 of input) {
         if (isNumbersSum2020(num1, num2, num3)) {
           resultOfThreeNumbersSum = num1 * num2 * num3;
         }

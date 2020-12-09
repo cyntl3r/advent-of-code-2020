@@ -21,7 +21,7 @@ const formatInputPart = (inputPart) =>
     });
 
 const isPassportIncludesFields = (passportData) => {
-  for (let { field: schemaField, optional } of validationSchema) {
+  for (const { field: schemaField, optional } of validationSchema) {
     if (
       !optional &&
       !passportData.find(
@@ -35,7 +35,7 @@ const isPassportIncludesFields = (passportData) => {
 
 const isPassportValid = (passportData) => {
   let errors = 0;
-  for (let { field: schemaField, optional, validator } of validationSchema) {
+  for (const { field: schemaField, optional, validator } of validationSchema) {
     if (!optional) {
       const findField = passportData.find(
         ({ field: passportField }) => passportField === schemaField

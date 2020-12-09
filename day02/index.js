@@ -20,7 +20,7 @@ const isPasswordContainsPolicy = (policyAndPassword) => {
     policyRangeTo,
   } = splitPolicyAndPassword(policyAndPassword);
   let counter = 0;
-  for (let passwordLetter of password) {
+  for (const passwordLetter of password) {
     if (passwordLetter === policyLetter) {
       counter += 1;
     }
@@ -36,7 +36,7 @@ const isPasswordContainsValidIndexes = (policyAndPassword) => {
     policyRangeTo,
   } = splitPolicyAndPassword(policyAndPassword);
   let counter = 0;
-  for (let i = 0; i < password.length; i += 1) {
+  for (const i = 0; i < password.length; i += 1) {
     if (i === policyRangeFrom - 1 && password[i] === policyLetter) {
       counter += 1;
     }
