@@ -3,7 +3,7 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/3
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const isTreeInPattern = (pattern, index) =>
   [...Array(Math.ceil(index / pattern.length)).keys()].reduce(
@@ -23,7 +23,7 @@ const getCountOfTrees = (input, right, down) => {
   return counter;
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: getCountOfTrees(input, 3, 1),
   part2: [
     getCountOfTrees(input, 1, 1),
@@ -34,6 +34,8 @@ const findResult = (input) => ({
   ].reduce((prev, next) => prev * next, 1),
 });
 
-const input = readInput().toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

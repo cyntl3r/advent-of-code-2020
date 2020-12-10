@@ -3,11 +3,10 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/5
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const calculateRange = (range, rowInstruction) => {
   for (const letter of rowInstruction) {
-    console.log(range);
     if (['F', 'L'].includes(letter)) {
       range[1] -= Math.ceil((range[1] - range[0]) / 2);
     } else if (['B', 'R'].includes(letter)) {
@@ -55,11 +54,13 @@ const findMissingSeat = (input) => {
   return missingSeat;
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: getHighestSeatId(input),
   part2: findMissingSeat(input),
 });
 
-const input = readInput().toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

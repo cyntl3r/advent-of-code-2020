@@ -3,7 +3,7 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/2
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const splitPolicyAndPassword = (policyAndPassword) => {
   const [policy, password] = policyAndPassword.split(': ');
@@ -47,11 +47,13 @@ const isPasswordContainsValidIndexes = (policyAndPassword) => {
   return counter === 1;
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: input.filter(isPasswordContainsPolicy).length,
   part2: input.filter(isPasswordContainsValidIndexes).length,
 });
 
-const input = readInput().toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

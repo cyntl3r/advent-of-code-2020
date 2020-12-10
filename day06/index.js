@@ -3,7 +3,7 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/6
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const getCountOfAnyoneYesAnswered = (data) => {
   const answeredLetters = {};
@@ -36,7 +36,7 @@ const getCountOfEveryoneYesAnswered = (data) => {
   ).length;
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: input
     .map(getCountOfAnyoneYesAnswered)
     .reduce((prev, next) => prev + next, 0),
@@ -45,6 +45,9 @@ const findResult = (input) => ({
     .reduce((prev, next) => prev + next, 0),
 });
 
-const input = readInput(true).toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt'),
+  true
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

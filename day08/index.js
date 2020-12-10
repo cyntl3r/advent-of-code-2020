@@ -1,9 +1,9 @@
 /**
  * Advent of Code 2020
  * @author cyntl3r
- * @description https://adventofcode.com/2020/day/x
+ * @description https://adventofcode.com/2020/day/8
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const getAccumulatorOfExecution = (input) => {
   let accumulator = 0;
@@ -21,7 +21,6 @@ const getAccumulatorOfExecution = (input) => {
     executedLinesIndexes.push(currentLineIndex);
     const [instruction, value] = input[currentLineIndex].split(' ');
     const intValue = parseInt(value, 10);
-    console.log(instruction, intValue);
     switch (instruction) {
       case 'acc': {
         accumulator += intValue;
@@ -62,11 +61,13 @@ const getAccumulatorOfExecutionAfterFix = (input) => {
   return 'error';
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: getAccumulatorOfExecution(input).accumulator,
   part2: getAccumulatorOfExecutionAfterFix(input),
 });
 
-const input = readInput().toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

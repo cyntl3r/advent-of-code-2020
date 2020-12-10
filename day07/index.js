@@ -3,7 +3,7 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/7
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const createBagChildren = (children) =>
   children.map((ch) => {
@@ -67,7 +67,7 @@ const getSumOfShinyGoldContain = (bags) => {
   return getSumOfShinyGold({ name: 'shiny gold', count: 1 }, bags) - 1;
 };
 
-const findResult = (input) => {
+export const findResult = (input) => {
   const bags = prepareBags(input);
   return {
     part1: getCountOfColorsEventuallyContainShinyGoldBag(bags),
@@ -75,6 +75,8 @@ const findResult = (input) => {
   };
 };
 
-const input = readInput().toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

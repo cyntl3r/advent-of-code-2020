@@ -3,7 +3,7 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/4
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 import { validationSchema } from './validationSchema.js';
 
 const formatInputPart = (inputPart) =>
@@ -52,7 +52,7 @@ const isPassportValid = (passportData) => {
   return errors === 0;
 };
 
-const findResult = (input) => ({
+export const findResult = (input) => ({
   part1: input.filter((inputPart) =>
     isPassportIncludesFields(formatInputPart(inputPart))
   ).length,
@@ -61,6 +61,9 @@ const findResult = (input) => ({
   ).length,
 });
 
-const input = readInput(true).toString();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt'),
+  true
+).toString();
 const result = findResult(input);
 console.log(result.part1, result.part2);

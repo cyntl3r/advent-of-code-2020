@@ -3,12 +3,12 @@
  * @author cyntl3r
  * @description https://adventofcode.com/2020/day/1
  */
-import { readInput } from '../utils.js';
+import { getInputPath, readInput } from '../utils.js';
 
 const isNumbersSum2020 = (...nums) =>
   nums.reduce((prev, current) => prev + current, 0) === 2020;
 
-const findResult = (input) => {
+export const findResult = (input) => {
   let resultOfTwoNumbersSum = 0;
   let resultOfThreeNumbersSum = 0;
   for (const num1 of input) {
@@ -30,6 +30,8 @@ const findResult = (input) => {
   };
 };
 
-const input = readInput().toNumber();
+const input = readInput(
+  getInputPath(import.meta.url, './input.txt')
+).toNumber();
 const result = findResult(input);
 console.log(result.part1, result.part2);
