@@ -1,6 +1,6 @@
 /**
  * Advent of Code 2020
- * @author cyntl3r
+ * @author cyntler
  * @description https://adventofcode.com/2020/day/14
  */
 import { getInputPath, readInput } from '../utils.js';
