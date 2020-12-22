@@ -16,9 +16,10 @@ const parseInput = (input, parseAddressToBit = false) => {
     } else {
       const [address, value] = line.split(' = ');
       const adr = parseInt(address.match(/\d+/)[0], 10);
+      const val = parseInt(value, 10);
       masks[currentMask].push({
         address: parseAddressToBit ? adr.toString(2) : adr,
-        value: parseInt(value, 10).toString(2),
+        value: !parseAddressToBit ? val.toString(2) : val,
       });
     }
   }
@@ -28,12 +29,11 @@ const parseInput = (input, parseAddressToBit = false) => {
   }));
 };
 
-const decimalToBits36 = (value) =>
-  [...new Array(36 - value.length)].map(() => '0').join('') + value;
+const decimalToBits36 = (value) => value.toString().padStart(36, '0');
 
 const bits36ToDecimal = (value) => parseInt(value, 2);
 
-const getFloatingLength = (value) =>
+const getFloatingCount = (value) =>
   value.split('').filter((char) => char === 'X').length;
 
 const applyMaskToValue = (value, mask) => {
@@ -75,32 +75,14 @@ const getSumOfAllValuesLeftInMemory = (input) => {
   for (const { mask, memoryWrites } of data) {
     for (const { address, value } of memoryWrites) {
       let address36Bit = applyMaskToAddress(decimalToBits36(address), mask);
-      const floatingLength = getFloatingLength(address36Bit);
-      let addressSplit = address36Bit.split('');
-      let changedIndexes = [];
-      for (let i = 1; i <= Math.pow(2, floatingLength); i += 1) {
-        console.log(addressSplit.join(''));
-        for (let y = 0; y < addressSplit.length; y += 1) {
-          const char = addressSplit[y];
-          if (char === '0' && changedIndexes.includes(y)) {
-            addressSplit[y] = '1';
-            const newAddressValue = bits36ToDecimal(addressSplit);
-            if (!memory[newAddressValue]) {
-              memory[newAddressValue] = [];
-            }
-            memory[newAddressValue].push(value);
-            break;
-          }
-          if (char === 'X') {
-            addressSplit[y] = '0';
-            changedIndexes.push(y);
-            const newAddressValue = bits36ToDecimal(addressSplit);
-            if (!memory[newAddressValue]) {
-              memory[newAddressValue] = [];
-            }
-            memory[newAddressValue].push(value);
-          }
-        }
+      const floatingCount = getFloatingCount(address36Bit);
+      for (let i = 0; i < Math.pow(2, floatingCount); i += 1) {
+        const f = i.toString(2).padStart(floatingCount, '0');
+        let ri = 0;
+        const newAddress = bits36ToDecimal(
+          address36Bit.replace(/X/g, () => f.charAt(ri++))
+        );
+        memory[newAddress] = value;
       }
     }
   }
