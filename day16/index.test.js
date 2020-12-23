@@ -1,16 +1,16 @@
 /**
  * Advent of Code 2020
  * @author cyntler
- * @description https://adventofcode.com/2020/day/10
+ * @description https://adventofcode.com/2020/day/16
  */
 import { getInputPath, readInput } from '../utils';
 import { findResult } from '.';
 
-test('day 10 testing', () => {
+test('day 16 testing', () => {
   const input = readInput(
     getInputPath(import.meta.url, './input.txt')
-  ).toNumber();
+  ).toString();
   const { part1, part2 } = findResult(input);
-  expect(part1).toBe(2376);
-  expect(part2).toBe(129586085429248);
+  expect(part1).toBe(26026);
+  expect(part2).toBe(null);
 });
