@@ -80,12 +80,8 @@ const getTicketScanningErrorRate = (input) => {
 
 const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
   const { requirements, ticket } = parseInput(input);
-  const departureRequirements =
-    input.length > 9
-      ? requirements.filter(({ name }) => name.includes('departure'))
-      : requirements;
   const values = {};
-  for (const nearbyTicket of validNearbyTickets) {
+  for (const nearbyTicket of [ticket, ...validNearbyTickets]) {
     for (let i = 0; i < nearbyTicket.length; i += 1) {
       const value = nearbyTicket[i];
       if (!values[i]) values[i] = [];
@@ -93,11 +89,10 @@ const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
     }
   }
   const valuesIndexes = Object.keys(values);
-  const data = {};
+  let matches = [];
   for (const key of valuesIndexes) {
     const valuesArr = values[key];
-    let firstName;
-    for (const { name, value: validators } of departureRequirements) {
+    for (const { name, value: validators } of requirements) {
       if (
         valuesArr.every(
           (val) =>
@@ -105,25 +100,34 @@ const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
               .length > 0
         )
       ) {
-        console.log(name, key);
-        if (Object.values(data).includes(name)) {
-          continue;
-        } else {
-          firstName = name;
-          break;
-        }
+        matches.push({ field: name, index: parseInt(key, 10) });
       }
     }
-    if (firstName) {
-      data[key] = firstName;
+  }
+
+  while (matches.length > requirements.length) {
+    for (const key of valuesIndexes) {
+      const rulesMatchingCurrentIndex = matches.filter(
+        ({ index }) => index === parseInt(key, 10)
+      );
+      if (rulesMatchingCurrentIndex.length === 1) {
+        const currentRule = rulesMatchingCurrentIndex[0];
+        matches = matches.filter(({ field, index }) => {
+          if (field === currentRule.field) {
+            return index === currentRule.index;
+          }
+          return true;
+        });
+      }
     }
   }
-  console.log(data);
-  const ticketValues = Object.keys(data)
-    .map((key) => Number(key))
-    .map((index) => ticket[index]);
-  console.log(ticketValues);
-  return ticketValues.reduce((prev, next) => prev * next, 1);
+  let result = 1;
+  for (const { field, index } of matches) {
+    if (field.startsWith('departure')) {
+      result *= ticket[index];
+    }
+  }
+  return result;
 };
 
 export const findResult = (input) => {
