@@ -7,6 +7,7 @@ import { getInputPath, readInput } from '../utils.js';
 
 const getCountOfCubesLeftAfterSixthCycle = (input) => {
   console.log(input.map((line) => [...line.split('')]));
+  return null;
 };
 
 export const findResult = (input) => ({
