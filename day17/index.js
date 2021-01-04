@@ -5,8 +5,20 @@
  */
 import { getInputPath, readInput } from '../utils.js';
 
+const initMap = (input) => {
+  const map = new Map();
+  const data = input.map((line) => [...line.split('')]);
+  data.forEach((line, y) => {
+    line.forEach((field, x) => {
+      map.set(`${x},${y},0`, field);
+    });
+  });
+  return map;
+};
+
 const getCountOfCubesLeftAfterSixthCycle = (input) => {
-  console.log(input.map((line) => [...line.split('')]));
+  const map = initMap(input);
+  console.log(map);
   return null;
 };
 
