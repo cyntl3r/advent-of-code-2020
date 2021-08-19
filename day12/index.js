@@ -1,8 +1,3 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/12
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const getManhattanDistance = (input, isWaypoint = false) => {
@@ -12,12 +7,15 @@ const getManhattanDistance = (input, isWaypoint = false) => {
     W: 2,
     S: 3,
   };
+  
   const shipPosition = [0, 0];
   let direction = directions.E;
   let waypointPosition = [1, 10];
+
   for (const instruction of input) {
     const [action, ...value] = instruction.split('');
     const intValue = parseInt(value.join(''), 10);
+
     switch (action) {
       case 'N': {
         if (isWaypoint) {
@@ -101,6 +99,7 @@ const getManhattanDistance = (input, isWaypoint = false) => {
       }
     }
   }
+
   return Math.abs(shipPosition[0]) + Math.abs(shipPosition[1]);
 };
 
@@ -112,5 +111,7 @@ export const findResult = (input) => ({
 const input = readInput(
   getInputPath(import.meta.url, './input.txt')
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

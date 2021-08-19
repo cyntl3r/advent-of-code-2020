@@ -1,17 +1,14 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/16
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const parseInput = (input) => {
   const requirements = [];
   let ticket = [];
   const nearbyTickets = [];
+
   let current = null;
   for (const line of input) {
     const [key, value] = line.split(':');
+
     if (key.includes('your ticket')) {
       current = 'your ticket';
       continue;
@@ -19,6 +16,7 @@ const parseInput = (input) => {
       current = 'nearby tickets';
       continue;
     }
+
     switch (current) {
       case 'your ticket': {
         ticket = key.split(',').map((val) => Number(val));
@@ -43,6 +41,7 @@ const parseInput = (input) => {
       }
     }
   }
+
   return { requirements, ticket, nearbyTickets };
 };
 
@@ -53,9 +52,11 @@ const getTicketScanningErrorRate = (input) => {
     .reduce((prev, next) => [...prev, ...next], []);
   const ticketInvalidValues = [];
   const validNearbyTicketsIndexes = [];
+
   for (let i = 0; i < nearbyTickets.length; i += 1) {
     const ticket = nearbyTickets[i];
     const invalidValues = [];
+
     for (const value of ticket) {
       const isValueInvalid =
         requirementArr.filter(({ min, max }) => value >= min && value <= max)
@@ -64,12 +65,14 @@ const getTicketScanningErrorRate = (input) => {
         invalidValues.push(value);
       }
     }
+
     if (invalidValues.length) {
       ticketInvalidValues.push(...invalidValues);
     } else {
       validNearbyTicketsIndexes.push(i);
     }
   }
+
   return {
     result: ticketInvalidValues.reduce((prev, next) => prev + next, 0),
     validNearbyTickets: nearbyTickets.filter((_ticket, i) =>
@@ -81,6 +84,7 @@ const getTicketScanningErrorRate = (input) => {
 const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
   const { requirements, ticket } = parseInput(input);
   const values = {};
+
   for (const nearbyTicket of [ticket, ...validNearbyTickets]) {
     for (let i = 0; i < nearbyTicket.length; i += 1) {
       const value = nearbyTicket[i];
@@ -88,10 +92,13 @@ const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
       values[i].push(value);
     }
   }
+
   const valuesIndexes = Object.keys(values);
   let matches = [];
+
   for (const key of valuesIndexes) {
     const valuesArr = values[key];
+
     for (const { name, value: validators } of requirements) {
       if (
         valuesArr.every(
@@ -110,6 +117,7 @@ const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
       const rulesMatchingCurrentIndex = matches.filter(
         ({ index }) => index === parseInt(key, 10)
       );
+
       if (rulesMatchingCurrentIndex.length === 1) {
         const currentRule = rulesMatchingCurrentIndex[0];
         matches = matches.filter(({ field, index }) => {
@@ -121,12 +129,15 @@ const getMultiplyOfDepartureValues = (input, validNearbyTickets) => {
       }
     }
   }
+
   let result = 1;
+
   for (const { field, index } of matches) {
     if (field.startsWith('departure')) {
       result *= ticket[index];
     }
   }
+
   return result;
 };
 
@@ -135,6 +146,7 @@ export const findResult = (input) => {
     result: ticketScanningErrorRate,
     validNearbyTickets,
   } = getTicketScanningErrorRate(input);
+
   return {
     part1: ticketScanningErrorRate,
     part2: getMultiplyOfDepartureValues(input, validNearbyTickets),
@@ -144,5 +156,7 @@ export const findResult = (input) => {
 const input = readInput(
   getInputPath(import.meta.url, './input.txt')
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

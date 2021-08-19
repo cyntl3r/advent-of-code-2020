@@ -1,8 +1,3 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/5
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const calculateRange = (range, rowInstruction) => {
@@ -13,6 +8,7 @@ const calculateRange = (range, rowInstruction) => {
       range[0] += Math.ceil((range[1] - range[0]) / 2);
     }
   }
+
   return range[0];
 };
 
@@ -25,23 +21,28 @@ const calculateColumn = (columnInstruction) =>
 const getSeatId = (instruction) => {
   const row = calculateRow(instruction.substring(0, 7));
   const column = calculateColumn(instruction.substring(7, 11));
+
   return row * 8 + column;
 };
 
 const getHighestSeatId = (input) => {
   let highestSeatId = 0;
+
   for (const instruction of input) {
     const seatId = getSeatId(instruction);
+
     if (seatId > highestSeatId) {
       highestSeatId = seatId;
     }
   }
+
   return highestSeatId;
 };
 
 const findMissingSeat = (input) => {
   let seats = [];
   let missingSeat = null;
+
   input.forEach((instruction) => seats.push(getSeatId(instruction)));
   seats.sort((a, b) => a - b);
   seats.map((seat, index) => {
@@ -51,6 +52,7 @@ const findMissingSeat = (input) => {
       }
     }
   });
+
   return missingSeat;
 };
 
@@ -62,5 +64,7 @@ export const findResult = (input) => ({
 const input = readInput(
   getInputPath(import.meta.url, './input.txt')
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

@@ -1,8 +1,3 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/3
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const isTreeInPattern = (pattern, index) =>
@@ -14,12 +9,15 @@ const isTreeInPattern = (pattern, index) =>
 const getCountOfTrees = (input, right, down) => {
   let counter = 0,
     currentXIndex = right;
+
   for (let i = down; i < input.length; i += down) {
     if (isTreeInPattern(input[i], currentXIndex)) {
       counter += 1;
     }
+
     currentXIndex += right;
   }
+
   return counter;
 };
 
@@ -37,5 +35,7 @@ export const findResult = (input) => ({
 const input = readInput(
   getInputPath(import.meta.url, './input.txt')
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

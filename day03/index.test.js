@@ -1,8 +1,3 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/3
- */
 import { getInputPath, readInput } from '../utils';
 import { findResult } from '.';
 

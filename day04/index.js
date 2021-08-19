@@ -14,6 +14,7 @@ const formatInputPart = (inputPart) =>
     .filter((val) => val)
     .map((val) => {
       const [field, value] = val.split(':');
+
       return {
         field: field.trim(),
         value: value.trim(),
@@ -30,16 +31,19 @@ const isPassportIncludesFields = (passportData) => {
     )
       return false;
   }
+
   return true;
 };
 
 const isPassportValid = (passportData) => {
   let errors = 0;
+
   for (const { field: schemaField, optional, validator } of validationSchema) {
     if (!optional) {
       const findField = passportData.find(
         ({ field: passportField }) => passportField === schemaField
       );
+
       if (!findField) {
         errors += 1;
       } else {
@@ -49,6 +53,7 @@ const isPassportValid = (passportData) => {
       }
     }
   }
+
   return errors === 0;
 };
 
@@ -65,5 +70,7 @@ const input = readInput(
   getInputPath(import.meta.url, './input.txt'),
   true
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

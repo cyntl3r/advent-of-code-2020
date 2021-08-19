@@ -1,8 +1,3 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/11
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const directions = [
@@ -18,6 +13,7 @@ const directions = [
 
 const adjacentCounter = (area, lineIndex, letterIndex) => {
   const seats = [];
+
   directions.forEach((dir) => {
     const line = lineIndex + dir.y;
     const letter = letterIndex + dir.x;
@@ -25,14 +21,17 @@ const adjacentCounter = (area, lineIndex, letterIndex) => {
       seats.push(area[line][letter]);
     }
   });
+
   return seats.filter((s) => s === '#').length;
 };
 
 const occupiedInDirectionsCounter = (area, lineIndex, letterIndex) => {
   const seats = [];
+
   directions.forEach((dir) => {
     let currentLine = lineIndex + dir.y;
     let currentLetter = letterIndex + dir.x;
+
     while (
       currentLine >= 0 &&
       currentLine < area.length &&
@@ -43,13 +42,16 @@ const occupiedInDirectionsCounter = (area, lineIndex, letterIndex) => {
         seats.push(area[currentLine][currentLetter]);
         break;
       }
+
       if (area[currentLine][currentLetter] === 'L') {
         break;
       }
+
       currentLine += dir.y;
       currentLetter += dir.x;
     }
   });
+
   return seats.length;
 };
 
@@ -62,12 +64,14 @@ const strigifyArea = (areaObj) =>
 const simulateSeatingArea = (areaStr, isLookingForDirections) => {
   const area = parseArea(areaStr);
   const changes = {};
+
   for (let i = 0; i < area.length; i += 1) {
     for (let j = 0; j < area[i].length; j += 1) {
       if (area[i][j] === 'L') {
         const isValid = isLookingForDirections
           ? occupiedInDirectionsCounter(area, i, j) === 0
           : adjacentCounter(area, i, j) === 0;
+
         if (isValid) {
           changes[`${i},${j}`] = '#';
         }
@@ -76,16 +80,19 @@ const simulateSeatingArea = (areaStr, isLookingForDirections) => {
         const isValid = isLookingForDirections
           ? occupiedInDirectionsCounter(area, i, j) >= 5
           : adjacentCounter(area, i, j) >= 4;
+
         if (isValid) {
           changes[`${i},${j}`] = 'L';
         }
       }
     }
   }
+
   for (const change in changes) {
     const [i, y] = change.split(',');
     area[i][y] = changes[change];
   }
+
   return strigifyArea(area);
 };
 
@@ -94,13 +101,16 @@ const getCountOfOccupiedSeatsAfterSimulation = (
   isLookingForDirections = false
 ) => {
   let lastArea = JSON.stringify(input);
+
   while (true) {
     const area = simulateSeatingArea(lastArea, isLookingForDirections);
     if (area === lastArea) {
       break;
     }
+
     lastArea = area;
   }
+
   return lastArea.split('').filter((char) => char === '#').length;
 };
 
@@ -112,5 +122,7 @@ export const findResult = (input) => ({
 const input = readInput(
   getInputPath(import.meta.url, './input.txt')
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);

@@ -1,12 +1,8 @@
-/**
- * Advent of Code 2020
- * @author cyntler
- * @description https://adventofcode.com/2020/day/6
- */
 import { getInputPath, readInput } from '../utils.js';
 
 const getCountOfAnyoneYesAnswered = (data) => {
   const answeredLetters = {};
+
   data
     .split('\n')
     .filter((line) => line)
@@ -15,12 +11,14 @@ const getCountOfAnyoneYesAnswered = (data) => {
         answeredLetters[letter] = null;
       });
     });
+
   return Object.keys(answeredLetters).length;
 };
 
 const getCountOfEveryoneYesAnswered = (data) => {
   let allLetters = {};
   let peopleCount = 0;
+
   data
     .split('\n')
     .filter((line) => line)
@@ -31,6 +29,7 @@ const getCountOfEveryoneYesAnswered = (data) => {
         else allLetters[letter] += 1;
       });
     });
+
   return Object.keys(allLetters).filter(
     (key) => allLetters[key] === peopleCount
   ).length;
@@ -49,5 +48,7 @@ const input = readInput(
   getInputPath(import.meta.url, './input.txt'),
   true
 ).toString();
+
 const result = findResult(input);
+
 console.log(result.part1, result.part2);
