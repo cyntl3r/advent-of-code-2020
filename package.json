@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Advent Of Code 2020 solutions.",
   "private": true,
+  "author": "Damian Cyntler",
   "type": "module",
   "repository": {
     "type": "git",
